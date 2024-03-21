@@ -2,18 +2,17 @@ import java.io.*;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int max = 0;
-        while (true) {
-            int c = System.in.read();
-            if (c == 32 || c == 10) {
-                max = Math.max(max, Integer.parseInt(sb.reverse().toString()));
-                sb.delete(0, sb.length());
+        int[] num = new int[2];
+        int i = 0, j = 1, c;
+        while ((c = System.in.read()) != 10) {
+            if (c == 32) {
+                i++;
+                j = 1;
             } else {
-                sb.append(c - 48);
+                num[i] += (c - 48) * j;
+                j *= 10;
             }
-            if (c == 10) break;
         }
-        System.out.println(max);
+        System.out.println(Math.max(num[0], num[1]));
     }
 }
