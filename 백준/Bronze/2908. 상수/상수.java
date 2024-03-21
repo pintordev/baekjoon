@@ -8,7 +8,7 @@ class Main {
             int c = System.in.read();
             if (c == 32 || c == 10) {
                 max = Math.max(max, Integer.parseInt(sb.reverse().toString()));
-                sb = new StringBuilder();
+                sb.delete(0, sb.length());
             } else {
                 sb.append(c - 48);
             }
