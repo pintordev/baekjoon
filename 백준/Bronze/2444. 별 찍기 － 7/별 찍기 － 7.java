@@ -7,9 +7,9 @@ class Main {
         int l = 2 * n - 1;
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= l; i++) {
-            for (int j = 1; j <= l; j++) {
-                if (j - n >= n - Math.abs(n - i)) continue;
-                if (n - j >= n - Math.abs(n - i)) sb.append(' ');
+            int f = n - Math.abs(n - i);
+            for (int j = 1; j < n + f; j++) {
+                if (n - j >= f) sb.append(' ');
                 else sb.append('*');
             }
             sb.append('\n');
