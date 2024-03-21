@@ -7,14 +7,14 @@ class Main {
         int n = Integer.parseInt(br.readLine());
         
         StringTokenizer st = new StringTokenizer(br.readLine());
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        int max = 0;
         double avg = 0;
         for (int i = 0; i < n; i++) {
             int score = Integer.parseInt(st.nextToken());
-            pq.add(score);
+            if (score > max) max = score;
             avg += score;
         }
 
-        System.out.println(avg / pq.peek() * 100 / n);
+        System.out.println(avg / max * 100 / n);
     }
 }
