@@ -8,11 +8,13 @@ class Main {
         
         StringTokenizer st = new StringTokenizer(br.readLine());
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-        for (int i = 0; i < n; i++) pq.add(Integer.parseInt(st.nextToken()));
-        
         double avg = 0;
-        int max = pq.peek();
-        while (!pq.isEmpty()) avg += pq.poll();
-        System.out.println(avg / max * 100 / n);
+        for (int i = 0; i < n; i++) {
+            int score = Integer.parseInt(st.nextToken());
+            pq.add(score);
+            avg += score;
+        }
+
+        System.out.println(avg / pq.peek() * 100 / n);
     }
 }
