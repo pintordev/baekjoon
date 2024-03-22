@@ -4,22 +4,22 @@ import java.util.*;
 class Main {
     public static void main(String[] args) throws IOException {
         int[] chars = new int[26];
-        int c, max = 0;
+        int c;
         while ((c = System.in.read()) != 10) {
             if (c >= 'a') c -= 32;
             chars[c - 'A']++;
-            max = Math.max(max, chars[c - 'A']);
         }
 
-        int count = 0, idx = 0;
+        int max = 0, ch = '?';
         for (int i = 0; i < 26; i++) {
-            if (chars[i] == max) {
-                count++;
-                idx = i;
+            if (chars[i] > max) {
+                max = chars[i];
+                ch = i + 'A';
+            } else if (chars[i] == max) {
+                ch = '?';
             }
         }
 
-        if (count == 1) System.out.println((char) (idx + 'A'));
-        else System.out.println('?');
+        System.out.println((char) ch);
     }
 }
