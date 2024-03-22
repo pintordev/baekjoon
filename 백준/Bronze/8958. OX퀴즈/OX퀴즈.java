@@ -1,20 +1,18 @@
 import java.io.*;
-import java.util.*;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
         int n = read();
+        int[] scores = new int[79];
         StringBuilder sb = new StringBuilder();
         while (n-- > 0) {
-            int c, sum = 0;
-            Stack<Integer> stack = new Stack<>();
+            int c, sum = 0, idx = 0;
             while ((c = System.in.read()) > 32) {
-                if (c == 'X') stack.add(0);
+                if (c == 'X') scores[idx++] = 0;
                 else {
-                    int score = stack.isEmpty() ? 1 : stack.peek() + 1;
-                    sum += score;
-                    stack.add(score);
+                    scores[idx] = idx == 0 ? 1 : scores[idx - 1] + 1;
+                    sum += scores[idx++];
                 }
             }
             sb.append(sum).append('\n');
