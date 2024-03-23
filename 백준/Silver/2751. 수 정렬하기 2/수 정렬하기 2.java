@@ -1,16 +1,16 @@
 import java.io.*;
-import java.util.*;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
         int n = read();
-        int[] num = new int[n];
-        for (int i = 0; i < n; i++) num[i] = read();
-        Arrays.sort(num);
+        boolean[] b = new boolean[2000001];
+        for (int i = 0; i < n; i++) b[read() + 1000000] = true;
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) sb.append(num[i]).append('\n');
+        for (int i = -1000000; i <= 1000000; i++) {
+            if (b[i + 1000000]) sb.append(i).append('\n');
+        }
         System.out.println(sb);
     }
 
