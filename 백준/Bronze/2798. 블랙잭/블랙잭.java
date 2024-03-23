@@ -13,6 +13,7 @@ class Main {
 
     private static int choose(int[] cards, int m, boolean[] chosen, int start, int count, int sum, int max) {
 
+        if (max == m) return max;
         if (count == 3) {
             if (sum <= m) max = Math.max(sum, max);
             return max;
