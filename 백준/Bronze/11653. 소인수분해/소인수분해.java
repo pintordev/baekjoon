@@ -4,13 +4,14 @@ class Main {
     public static void main(String[] args) throws IOException {
         int n = read(), pf = 2;
         StringBuilder sb = new StringBuilder();
-        while (n > 1) {
-            if (n % pf == 0) {
+        while (pf * pf <= n) {
+            while (n % pf == 0) {
                 sb.append(pf).append('\n');
                 n /= pf;
             }
-            else pf++;
+            pf++;
         }
+        if (n != 1) sb.append(n);
         System.out.println(sb);
     }
 
