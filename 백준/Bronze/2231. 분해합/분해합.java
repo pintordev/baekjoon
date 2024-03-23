@@ -4,7 +4,12 @@ class Main {
     public static void main(String[] args) throws IOException {
 
         int n = read();
-        int len = (n + "").length(), con = 0;
+        int m = n, len = 0, con = 0;
+        while (m > 0) {
+            m /= 10;
+            len++;
+        }
+        
         for (int i = n - 9 * len; i < n; i++) {
             if (isCon(i, n)) {
                 con = i;
