@@ -10,7 +10,10 @@ class Main {
             sum += i;
             if (first == 0) first = i;
         }
-        if (sum > 0) System.out.printf("%d\n%d\n", sum, first);
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(sum).append('\n').append(first);
+        if (sum > 0) System.out.println(sb);
         else System.out.println("-1");
     }
 
