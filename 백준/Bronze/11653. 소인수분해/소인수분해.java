@@ -5,11 +5,11 @@ class Main {
         int n = read(), pf = 2;
         StringBuilder sb = new StringBuilder();
         while (n > 1) {
-            while (n % pf == 0) {
+            if (n % pf == 0) {
                 sb.append(pf).append('\n');
                 n /= pf;
             }
-            pf++;
+            else pf++;
         }
         System.out.println(sb);
     }
