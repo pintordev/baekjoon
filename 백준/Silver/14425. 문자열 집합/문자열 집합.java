@@ -6,11 +6,11 @@ class Main {
 
         int n = read(), m = read();
         Set<String> set = new HashSet<>();
-        while (n-- > 0) set.add(new String(readChars()));
+        while (n-- > 0) set.add(readStr());
 
         int count = 0;
         while (m-- > 0) {
-            if (set.contains(new String(readChars()))) count++;
+            if (set.contains(readStr())) count++;
         }
         System.out.println(count);
     }
@@ -23,10 +23,10 @@ class Main {
         return n;
     }
 
-    public static char[] readChars() throws IOException {
-        char[] c = new char[500];
-        int idx = 0, ch;
-        while ((ch = System.in.read()) > 32) c[idx++] = (char) ch;
-        return Arrays.copyOf(c, idx);
+    public static String readStr() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int ch;
+        while ((ch = System.in.read()) > 32) sb.append((char) ch);
+        return sb.toString();
     }
 }
