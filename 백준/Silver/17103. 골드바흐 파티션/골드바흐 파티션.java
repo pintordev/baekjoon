@@ -22,9 +22,10 @@ class Main {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
             int count = 0;
-            for (int j = 2; j <= num[i] / 2; j++) {
+            for (int j = 3; j <= num[i] / 2; j += 2) {
                 if (!isPrime[j] && !isPrime[num[i] - j]) count++;
             }
+            if (num[i] == 4) count++;
             sb.append(count).append('\n');
         }
         System.out.println(sb);
