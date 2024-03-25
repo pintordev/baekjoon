@@ -4,20 +4,23 @@ import java.util.*;
 class Main {
     public static void main(String[] args) throws IOException {
         int m = read(), n = read();
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = false; isPrime[1] = false;
+
+        for (int i = 2; i * i <= n; i++) {
+            if (isPrime[i]) {
+                for (int j = i + i; j <= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
         StringBuilder sb = new StringBuilder();
         for (int i = m; i <= n; i++) {
-            if (isPrime(i)) sb.append(i).append('\n');
+            if (isPrime[i]) sb.append(i).append('\n');
         }
         System.out.println(sb);
-    }
-
-    private static boolean isPrime(int n) {
-        if (n == 2) return true;
-        if (n < 2 || n % 2 == 0) return false;
-        for (int i = 3; i * i <= n; i += 2) {
-            if (n % i == 0) return false;
-        }
-        return true;
     }
 
     public static int read() throws IOException {
