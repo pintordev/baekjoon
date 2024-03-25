@@ -2,12 +2,12 @@ import java.io.*;
 
 class Main {
     public static void main(String[] args) throws IOException {
-
-        int t = (int) read();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
 
         StringBuilder sb = new StringBuilder();
         while (t-- > 0) {
-            long n = read();
+            long n = Long.parseLong(br.readLine());
             while (!isPrime(n)) n++;
             sb.append(n).append('\n');
         }
@@ -15,18 +15,11 @@ class Main {
     }
 
     private static boolean isPrime(long n) {
-        if (n < 2) return false;
-        for (long i = 2; i * i <= n; i++) {
+        if (n == 2) return true;
+        if (n < 2 || n % 2 == 0) return false;
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
             if (n % i == 0) return false;
         }
         return true;
-    }
-
-    public static long read() throws IOException {
-        long c, n = System.in.read() & 15;
-        while ((c = System.in.read()) > 32) {
-            n = (n << 3) + (n << 1) + (c & 15);
-        }
-        return n;
     }
 }
