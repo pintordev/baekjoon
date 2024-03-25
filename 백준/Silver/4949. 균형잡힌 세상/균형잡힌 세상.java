@@ -13,11 +13,17 @@ class Main {
                 if (ch == '(' || ch == '[') stack.add(ch);
                 else if (ch == ')') {
                     if (!stack.isEmpty() && stack.peek() == '(') stack.pop();
-                    else stack.add(ch);
+                    else {
+                        stack.add(ch);
+                        break;
+                    }
                 }
                 else if (ch == ']') {
                     if (!stack.isEmpty() && stack.peek() == '[') stack.pop();
-                    else stack.add(ch);
+                    else {
+                        stack.add(ch);
+                        break;
+                    }
                 }
             }
             sb.append(stack.size() == 0 ? "yes" : "no").append('\n');
