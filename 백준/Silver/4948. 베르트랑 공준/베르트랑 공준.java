@@ -12,23 +12,24 @@ class Main {
         }
 
         boolean[] isPrime = new boolean[2 * max + 1];
+        int[] count = new int[2 * max + 1];
         Arrays.fill(isPrime, true);
         isPrime[0] = false;
         isPrime[1] = false;
 
-        int[] count = new int[list.size()];
+        int c = 0;
         for (int i = 2; i <= 2 * max; i++) {
-            if (!isPrime[i]) continue;
-            for (int j = 0; j < count.length; j++) {
-                int m = list.get(j);
-                if (i > m && i <= 2 * m) count[j]++;
+            if (!isPrime[i]) {
+                count[i] = c;
+                continue;
             }
-            if ((long) i * i > 2 * max) continue;
+            count[i] = ++c;
+            if (i * i > 2 * max) continue;
             for (int j = i + i; j <= 2 * max; j += i) isPrime[j] = false;
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int c : count) sb.append(c).append('\n');
+        for (int i : list) sb.append(count[2 * i] - count[i]).append('\n');
         System.out.println(sb);
     }
 
