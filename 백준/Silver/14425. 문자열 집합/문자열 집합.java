@@ -4,29 +4,17 @@ import java.util.*;
 class Main {
     public static void main(String[] args) throws IOException {
 
-        int n = read(), m = read();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken()), m = Integer.parseInt(st.nextToken());
+        
         Set<String> set = new HashSet<>();
-        while (n-- > 0) set.add(readStr());
+        while (n-- > 0) set.add(br.readLine());
 
         int count = 0;
         while (m-- > 0) {
-            if (set.contains(readStr())) count++;
+            if (set.contains(br.readLine())) count++;
         }
         System.out.println(count);
-    }
-
-    public static int read() throws IOException {
-        int c, n = System.in.read() & 15;
-        while ((c = System.in.read()) > 32) {
-            n = (n << 3) + (n << 1) + (c & 15);
-        }
-        return n;
-    }
-
-    public static String readStr() throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int ch;
-        while ((ch = System.in.read()) > 32) sb.append((char) ch);
-        return sb.toString();
     }
 }
