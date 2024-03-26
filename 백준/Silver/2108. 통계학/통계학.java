@@ -5,18 +5,19 @@ class Main {
     public static void main(String[] args) throws IOException {
 
         int n = read();
-        int[] num = new int[n], freq = new int[8001];
-        int sum = 0;
+        int[] freq = new int[8001];
+        int sum = 0, max = 0, min = 8000;
         for (int i = 0; i < n; i++) {
-            num[i] = read();
-            sum += num[i];
-            freq[num[i] + 4000]++;
+            int num = read();
+            sum += num;
+            freq[num + 4000]++;
+            max = Math.max(max, num + 4000);
+            min = Math.min(min, num + 4000);
         }
-        Arrays.sort(num);
 
-        int maxf = 0, maxv = -4001;
-        boolean isSecond = false;
-        for (int i = 0; i < 8001; i++) {
+        int maxf = 0, maxv = -4001, mid = 0, midf = 0;
+        boolean isSecond = false, findMid = false;
+        for (int i = min; i <= max; i++) {
             if (maxf < freq[i]) {
                 maxf = freq[i];
                 maxv = i;
@@ -25,13 +26,19 @@ class Main {
                 maxv = i;
                 isSecond = true;
             }
+
+            midf += freq[i];
+            if (!findMid && midf >= n / 2 + 1) {
+                mid = i - 4000;
+                findMid = true;
+            }
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append(Math.round((double) sum / n)).append('\n');
-        sb.append(num[n / 2]).append('\n');
+        sb.append(mid).append('\n');
         sb.append(maxv - 4000).append('\n');
-        sb.append(num[n - 1] - num[0]).append('\n');
+        sb.append(max - min).append('\n');
         System.out.println(sb);
     }
 
