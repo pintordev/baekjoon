@@ -7,8 +7,6 @@ class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int a = Integer.parseInt(st.nextToken()), b = Integer.parseInt(st.nextToken());
         
-        if (a > b) System.out.println(">");
-        else if (a < b) System.out.println("<");
-        else System.out.println("==");
+        System.out.println(a > b ? ">" : a < b ? "<" : "==");
     }
 }
