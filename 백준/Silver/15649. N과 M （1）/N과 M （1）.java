@@ -1,8 +1,10 @@
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 class Main {
 
-    public static StringBuilder sb = new StringBuilder();
+    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     public static boolean[] visited;
     public static int[] seq;
 
@@ -15,13 +17,16 @@ class Main {
         visited = new boolean[n];
 
         sequence(n, m, 0);
-        System.out.println(sb);
+        bw.flush();
     }
 
-    private static void sequence(int n, int m, int d) {
+    private static void sequence(int n, int m, int d) throws IOException {
         if (d == m) {
-            for (int s : seq) sb.append(s).append(' ');
-            sb.append('\n');
+            for (int s : seq) {
+                bw.write(s + 48);
+                bw.write(' ');
+            }
+            bw.newLine();
             return;
         }
 
