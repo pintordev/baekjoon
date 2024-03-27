@@ -24,6 +24,5 @@ class Main {
                                * k);
             break;
         }
-
     }
 }
