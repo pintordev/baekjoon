@@ -8,12 +8,14 @@ class Main {
         int[] date = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int x = Integer.parseInt(st.nextToken());
         int y = Integer.parseInt(st.nextToken());
 
         int yDate = 0;
-        for (int i = 0; i < x - 1; i++) yDate += date[i];
+        for (int i = 0; i < x - 1; i++) {
+            yDate += date[i];
+        }
         yDate += y;
         System.out.println(day[yDate % 7]);
     }
