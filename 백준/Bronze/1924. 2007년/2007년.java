@@ -13,9 +13,7 @@ class Main {
         int y = Integer.parseInt(st.nextToken());
 
         int yDate = 0;
-        for (int i = 0; i < x - 1; i++) {
-            yDate += date[i];
-        }
+        for (int i = 0; i < x - 1; i++) yDate += date[i];
         yDate += y;
         System.out.println(day[yDate % 7]);
     }
