@@ -18,7 +18,7 @@ class Main {
         bw.flush();
     }
 
-    private static void sequence(int n, int m, int depth) throws IOException {
+    public static void sequence(int n, int m, int depth) throws IOException {
         if (depth == m) {
             for (int s : seq) {
                 bw.write(s + 48);
