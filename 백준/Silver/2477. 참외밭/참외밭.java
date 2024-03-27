@@ -16,15 +16,14 @@ class Main {
             len[i] = Integer.parseInt(st.nextToken());
         }
 
-        int area = 0;
         for (int i = 0; i < 6; i++) {
             if (dir[i] != dir[(i + 2) % 6]) continue;
             if (dir[(i + 1) % 6] != dir[(i + 3) % 6]) continue;
-            area += len[(i + 4) % 6] * len[(i + 5) % 6];
-            area -= len[(i + 1) % 6] * len[(i + 2) % 6];
-            area *= k;
+            System.out.println((len[(i + 4) % 6] * len[(i + 5) % 6]
+                               - len[(i + 1) % 6] * len[(i + 2) % 6]) 
+                               * k);
             break;
         }
-        System.out.println(area);
+
     }
 }
