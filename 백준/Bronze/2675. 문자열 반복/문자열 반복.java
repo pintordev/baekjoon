@@ -12,9 +12,11 @@ class Main {
             int r = Integer.parseInt(st.nextToken());
             char[] c = st.nextToken().toCharArray();
             for (int i = 0; i < c.length; i++) {
-                for (int j = 0; j < r; j++) sb.append(c[i]);
+                for (int j = 0; j < r; j++) {
+                    sb.append(c[i]);
+                }
             }
-            sb.append(' ');
+            sb.append('\n');
         }
         
         System.out.println(sb);
