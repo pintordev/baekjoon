@@ -6,11 +6,9 @@ class Main {
         int n = Integer.parseInt(br.readLine());
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            for (int j = 1; j <= n + i; j++) {
-                if (Math.abs(n - j) > i) sb.append(' ');
-                else sb.append('*');
-            }
+        for (int i = 1; i <= n; i++) {
+            sb.append(" ".repeat(n - i));
+            sb.append("*".repeat(2 * i - 1));
             sb.append('\n');
         }
         System.out.println(sb);
