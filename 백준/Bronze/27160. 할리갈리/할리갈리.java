@@ -47,7 +47,7 @@ class Card {
     public boolean equals(Object obj) {
         if(!(obj instanceof Card)) return false;
         Card card = (Card) obj;
-        if (this.name.equals(card.name)) {
+        if (this.name.charAt(0) == card.name.charAt(0)) {
             card.cnt += this.cnt;
             return true;
         }
