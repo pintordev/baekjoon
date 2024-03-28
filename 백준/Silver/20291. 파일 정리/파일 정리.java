@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 class Main {
@@ -14,7 +12,8 @@ class Main {
             st = new StringTokenizer(br.readLine(), ".");
             st.nextToken();
             String ext = st.nextToken();
-            files.put(ext, files.getOrDefault(ext, 0) + 1);
+            Integer cnt = files.putIfAbsent(ext, 1);
+            if (cnt != null) files.put(ext, cnt + 1);
         }
 
         StringBuilder sb = new StringBuilder();
