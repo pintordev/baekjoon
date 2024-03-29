@@ -5,12 +5,13 @@ class Main {
 
         int l = read();
         int mod = 1234567891;
-        int hash = 0;
-        int factor = 1;
+        long hash = 0;
+        long factor = 1;
         for (int i = 0; i < l; i++) {
             int c = System.in.read() - 96;
-            hash += c * (factor % mod) % mod;
-            factor = 31 * (factor % mod) % mod;
+            hash += c * (factor % mod);
+            hash %= mod;
+            factor = 31 * (factor % mod);
         }
         System.in.read();
         System.out.println(hash);
