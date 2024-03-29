@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 class Main {
 
-    public static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static StringBuilder sb = new StringBuilder();
     public static int n;
     public static int m;
     public static int[] num;
@@ -13,11 +13,11 @@ class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        st = new StringTokenizer(br.readLine());
+        st = new StringTokenizer(br.readLine(), " ");
         num = new int[n];
         for (int i = 0; i < n; i++) num[i] = Integer.parseInt(st.nextToken());
         Arrays.sort(num);
@@ -26,17 +26,14 @@ class Main {
         visited = new boolean[n];
 
         permute(0);
-        bw.flush();
+        System.out.println(sb);
     }
 
     public static void permute(int depth) throws IOException {
 
         if (depth == m) {
-            for (int num : permutation) {
-                bw.write(String.valueOf(num));
-                bw.write(' ');
-            }
-            bw.append('\n');
+            for (int num : permutation) sb.append(num).append(' ');
+            sb.append('\n');
             return;
         }
 
