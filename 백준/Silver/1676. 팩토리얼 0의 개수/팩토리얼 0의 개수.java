@@ -3,11 +3,10 @@ import java.io.IOException;
 class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
-        int f = 5;
         int sum = 0;
-        while (f <= n) {
-            sum += n / f;
-            f *= 5;
+        while (n > 0) {
+            n /= 5;
+            sum += n;
         }
         System.out.println(sum);
     }
