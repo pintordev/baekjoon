@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Arrays;
 
 class Main {
     public static void main(String[] args) throws IOException {
@@ -13,18 +11,27 @@ class Main {
         int n = Integer.parseInt(input[0]);
         int m = Integer.parseInt(input[1]);
 
-        Set<String> notHear = new HashSet<>();
-        while (n-- > 0) notHear.add(br.readLine());
+        String[] notHear = new String[n];
+        for (int i = 0; i < n; i++) notHear[i] = br.readLine();
+        Arrays.sort(notHear);
 
-        Set<String> notHearAndSee = new TreeSet<>();
-        while (m-- > 0) {
-            String notSee = br.readLine();
-            if (!notHear.add(notSee)) notHearAndSee.add(notSee);
-        }
+        String[] notSee = new String[m];
+        for (int i = 0; i < m; i++) notSee[i] = br.readLine();
+        Arrays.sort(notSee);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(notHearAndSee.size()).append('\n');
-        for (String name : notHearAndSee) sb.append(name).append('\n');
+        int hdx = 0, sdx = 0, count = 0;
+        while (hdx < n && sdx < m) {
+            if (notHear[hdx].compareTo(notSee[sdx]) < 0) hdx++;
+            else if (notHear[hdx].compareTo(notSee[sdx]) > 0) sdx++;
+            else {
+                sb.append(notHear[hdx]).append('\n');
+                hdx++;
+                sdx++;
+                count++;
+            }
+        }
+        sb.insert(0, '\n').insert(0, count);
         System.out.println(sb);
     }
 }
