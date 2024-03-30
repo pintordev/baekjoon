@@ -1,30 +1,30 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken()), m = Integer.parseInt(st.nextToken());
-        Map<String, Integer> notHear = new TreeMap<>();
-        while (n-- > 0) notHear.put(br.readLine(), 0);
-        int count = 0;
+        String[] input = br.readLine().split(" ");
+        int n = Integer.parseInt(input[0]);
+        int m = Integer.parseInt(input[1]);
+
+        Set<String> notHear = new HashSet<>();
+        while (n-- > 0) notHear.add(br.readLine());
+
+        Set<String> notHearAndSee = new TreeSet<>();
         while (m-- > 0) {
             String notSee = br.readLine();
-            if (notHear.containsKey(notSee)) {
-                count++;
-                notHear.put(notSee, 1);
-            }
+            if (!notHear.add(notSee)) notHearAndSee.add(notSee);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(count).append('\n');
-        for (String name : notHear.keySet()) {
-            if (notHear.get(name) > 0) {
-                sb.append(name).append('\n');
-            }
-        }
+        sb.append(notHearAndSee.size()).append('\n');
+        for (String name : notHearAndSee) sb.append(name).append('\n');
         System.out.println(sb);
     }
 }
