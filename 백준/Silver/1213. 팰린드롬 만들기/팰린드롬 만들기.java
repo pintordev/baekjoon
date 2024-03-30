@@ -1,27 +1,22 @@
-import java.io.*;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.IOException;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        char[] name = br.readLine().toCharArray();
+        int[] chars = new int[26];
 
-        Map<Character, Integer> map = new TreeMap<>();
-        int len = name.length;
-        for (int i = 0; i < len; i++) {
-            Integer value = map.putIfAbsent(name[i], 1);
-            if (value != null) map.put(name[i], value + 1);
-        }
+        int c;
+        while ((c = System.in.read()) != 10) chars[c - 65]++;
 
         StringBuilder sb = new StringBuilder();
         boolean canMake = true;
         char hasOdd = 0;
-        for (var entry : map.entrySet()) {
-            sb.append((entry.getKey() + "").repeat(entry.getValue() / 2));
-            if (entry.getValue() % 2 == 0) continue;
-            if (hasOdd == 0) hasOdd = entry.getKey();
+        for (int i = 0; i < 26; i++) {
+            char ch = (char) (i + 65);
+            if (chars[i] == 0) continue;
+            sb.append((ch + "").repeat(chars[i] / 2));
+            if (chars[i] % 2 == 0) continue;
+            if (hasOdd == 0) hasOdd = ch;
             else {
                 canMake = false;
                 break;
