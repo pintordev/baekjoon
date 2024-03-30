@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -19,11 +17,11 @@ class Main {
 
         StringBuilder sb = new StringBuilder();
         boolean canMake = true;
-        char hasOdd = ' ';
+        char hasOdd = 0;
         for (var entry : map.entrySet()) {
             sb.append((entry.getKey() + "").repeat(entry.getValue() / 2));
             if (entry.getValue() % 2 == 0) continue;
-            if (hasOdd == ' ') hasOdd = entry.getKey();
+            if (hasOdd == 0) hasOdd = entry.getKey();
             else {
                 canMake = false;
                 break;
@@ -32,12 +30,9 @@ class Main {
 
         if (!canMake) System.out.println("I'm Sorry Hansoo");
         else {
-            System.out.println(
-                    new StringBuilder()
-                    .append(sb)
-                    .append(hasOdd != ' ' ? hasOdd : "")
-                    .append(sb.reverse())
-            );
+            System.out.print(sb);
+            if (hasOdd != 0) System.out.print(hasOdd);
+            System.out.println(sb.reverse());
         }
     }
 }
