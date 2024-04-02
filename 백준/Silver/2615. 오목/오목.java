@@ -20,7 +20,7 @@ class Main {
             for (int j = 0; j < 19; j++) {
                 if (board[i][j] == 0) continue;
                 for (int k = 0; k < 4; k++) {
-                    if (count(i, j, k) == 5 && check(i, j, k)) {
+                    if (check(i, j, k) && count(i, j, k) == 5) {
                         System.out.println(new StringBuilder()
                                 .append(board[i][j]).append('\n')
                                 .append(i + 1).append(' ').append(j + 1));
