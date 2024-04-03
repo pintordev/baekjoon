@@ -23,8 +23,8 @@ class Main {
         if (stack.isEmpty()) System.out.println("FRULA");
         else {
             StringBuilder sb = new StringBuilder();
-            while(!stack.isEmpty()) sb.append(stack.pop());
-            System.out.println(sb.reverse());
+            for (char c : stack) sb.append(c);
+            System.out.println(sb);
         }
     }
 }
