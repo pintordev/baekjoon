@@ -15,24 +15,24 @@ class Main {
             br.readLine();
             String[] numbers = pattern.split(br.readLine());
 
-            boolean dirFlag = true, isError = false;
+            boolean reversed = true, isError = false;
             int start = 1, end = numbers.length - 1;
             int commandsLen = commands.length;
             for (int i = 0; i < commandsLen; i++) {
-                if (commands[i] == 'R') dirFlag = !dirFlag;
+                if (commands[i] == 'R') reversed = !reversed;
                 else {
                     if (start > end) {
                         sb.append("error\n");
                         isError = true;
                         break;
                     }
-                    if (dirFlag) start++;
+                    if (reversed) start++;
                     else end--;
                 }
             }
             if (isError) continue;
             sb.append('[');
-            if (dirFlag) {
+            if (reversed) {
                 for (int i = start; i <= end; i++) sb.append(numbers[i]).append(',');
             } else {
                 for (int i = end; i >= start; i--) sb.append(numbers[i]).append(',');
