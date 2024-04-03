@@ -8,11 +8,10 @@ class Main {
         int t = Integer.parseInt(br.readLine());
 
         StringBuilder sb = new StringBuilder();
-        Pattern pattern = Pattern.compile("\\[|,|\\]");
         while (t-- > 0) {
             char[] commands = br.readLine().toCharArray();
             int n = Integer.parseInt(br.readLine());
-            String[] numbers = pattern.split(br.readLine());
+            String[] numbers = br.readLine().split("\\[|,|\\]");
             int commandsLen = commands.length;
             boolean dirFlag = true, isError = false;
             int start = 1, end = numbers.length - 1;
