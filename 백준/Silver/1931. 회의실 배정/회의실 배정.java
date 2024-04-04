@@ -6,11 +6,10 @@ import java.util.Arrays;
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int n = read();
         Reservation[] reservations = new Reservation[n];
         for (int i = 0; i < n; i++) {
-            String[] input = br.readLine().split(" ");
-            reservations[i] = new Reservation(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+            reservations[i] = new Reservation(read(), read());
         }
 
         Arrays.sort(reservations, (a, b) -> {
@@ -26,6 +25,14 @@ class Main {
             }
         }
         System.out.println(cnt);
+    }
+
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
