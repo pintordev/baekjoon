@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 class Main {
     public static void main(String[] args) throws IOException {
@@ -16,16 +14,18 @@ class Main {
         }
         Arrays.sort(u);
 
-        Set<Integer> xy = new HashSet<>();
+        int[] xy = new int[n * n];
+        int idx = 0;
         for (int x : u) {
             for (int y : u) {
-                xy.add(x + y);
+                xy[idx++] = x + y;
             }
         }
+        Arrays.sort(xy);
 
         for (int k = n - 1; k >= 0; k--) {
             for (int z : u) {
-                if (xy.contains(u[k] - z)) {
+                if (Arrays.binarySearch(xy, u[k] - z) >= 0) {
                     System.out.println(u[k]);
                     return;
                 }
