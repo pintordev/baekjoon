@@ -1,40 +1,35 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        int n = read();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
 
         StringBuilder sb = new StringBuilder();
         PriorityQueue<Integer> leftQ = new PriorityQueue<>(Comparator.reverseOrder());
         PriorityQueue<Integer> rightQ = new PriorityQueue<>();
-        while (n-- > 0) {
-            if (leftQ.size() == rightQ.size()) {
-                leftQ.add(read());
+        int median = Integer.parseInt(br.readLine());
+        sb.append(median).append('\n');
+        leftQ.add(median);
+        for (int i = 1; i < n; i++) {
+            int num = Integer.parseInt(br.readLine());
+            if (leftQ.peek() < num) {
+                rightQ.add(num);
             } else {
-                rightQ.add(read());
+                leftQ.add(num);
             }
-
-            while (!rightQ.isEmpty() && leftQ.peek() > rightQ.peek()) {
-                int left = leftQ.poll();
-                int right = rightQ.poll();
-                leftQ.add(right);
-                rightQ.add(left);
+            while (leftQ.size() > rightQ.size() + 1) {
+                rightQ.add(leftQ.poll());
             }
-
+            while (rightQ.size() > leftQ.size()) {
+                leftQ.add(rightQ.poll());
+            }
             sb.append(leftQ.peek()).append('\n');
         }
         System.out.println(sb);
-    }
-    
-    public static int read() throws IOException {
-        int c, n = System.in.read() & 15;
-        boolean negative = n == 13;
-        if (negative) n = System.in.read() & 15;
-        while ((c = System.in.read()) > 32) {
-            n = (n << 3) + (n << 1) + (c & 15);
-        }
-        return negative ? ~n + 1 : n;
     }
 }
