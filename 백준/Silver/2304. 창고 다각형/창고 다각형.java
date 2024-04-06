@@ -1,21 +1,16 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int n = read();
 
         Pillar[] pillars = new Pillar[n];
         int maxH = 0;
         int maxP = 0;
-        String[] input;
         for (int i = 0; i < n; i++) {
-            input = br.readLine().split(" ");
-            pillars[i] = new Pillar(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+            pillars[i] = new Pillar(read(), read());
             if (maxH <= pillars[i].h) {
                 maxH = pillars[i].h;
                 maxP = pillars[i].p;
@@ -42,6 +37,14 @@ class Main {
         }
 
         System.out.println(area);
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
