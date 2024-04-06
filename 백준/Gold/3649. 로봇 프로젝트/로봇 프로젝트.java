@@ -8,8 +8,13 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringBuilder sb = new StringBuilder();
-        String s;
-        while ((s = br.readLine()) != null) {
+        L:
+        while (true) {
+            String s = br.readLine();
+            if (s == null) {
+                break;
+            }
+
             int x = Integer.parseInt(s) * 10000000;
 
             int n = Integer.parseInt(br.readLine());
@@ -22,28 +27,21 @@ class Main {
 
             int ldx = 0;
             int rdx = n - 1;
-            int lb = 0;
-            int rb = 0;
-            boolean found = false;
             while (ldx < rdx) {
-                lb = blocks[ldx];
-                rb = blocks[rdx];
+                int sum = blocks[ldx] + blocks[rdx];
 
-                if (lb + rb < x) {
+                if (sum < x) {
                     ldx++;
-                } else if (lb + rb > x) {
+                } else if (sum > x) {
                     rdx--;
                 } else {
-                    found = true;
-                    break;
+                    sb.append("yes").append(' ')
+                            .append(blocks[ldx]).append(' ')
+                            .append(blocks[rdx]).append('\n');
+                    continue L;
                 }
             }
-
-            if (found) {
-                sb.append("yes").append(' ').append(lb).append(' ').append(rb).append('\n');
-            } else {
-                sb.append("danger").append('\n');
-            }
+            sb.append("danger").append('\n');
         }
 
         System.out.println(sb);
