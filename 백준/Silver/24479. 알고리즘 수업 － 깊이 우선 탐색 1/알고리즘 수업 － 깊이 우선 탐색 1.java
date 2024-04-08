@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,11 +11,9 @@ class Main {
     public static int vdx = 0;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
-        int r = Integer.parseInt(input[2]);
+        int n = read();
+        int m = read();
+        int r = read();
 
         graph = new List[n + 1];
         visited = new boolean[n + 1];
@@ -28,9 +24,8 @@ class Main {
         }
 
         for (int i = 0; i < m; i++) {
-            input = br.readLine().split(" ");
-            int a = Integer.parseInt(input[0]);
-            int b = Integer.parseInt(input[1]);
+            int a = read();
+            int b = read();
             graph[a].add(b);
             graph[b].add(a);
         }
@@ -56,5 +51,13 @@ class Main {
                 dfs(i);
             }
         }
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
