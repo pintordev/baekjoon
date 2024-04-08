@@ -26,10 +26,9 @@ class Main {
                 }
             }
         }
+        queue.add(new Node(sr, sc, 0));
 
         int[][] ds = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-        queue.add(new Node(sr, sc, 0));
         while (!queue.isEmpty()) {
             int len = queue.size();
             for (int i = 0; i < len; i++) {
