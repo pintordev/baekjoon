@@ -1,25 +1,20 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int m = Integer.parseInt(input[0]);
-        int n = Integer.parseInt(input[1]);
-        int h = Integer.parseInt(input[2]);
+        int m = read();
+        int n = read();
+        int h = read();
 
         int[][][] box = new int[h][n][m];
         int toRipe = m * n * h;
         Queue<Tomato> queue = new LinkedList<>();
         for (int k = 0; k < h; k++) {
             for (int i = 0; i < n; i++) {
-                input = br.readLine().split(" ");
                 for (int j = 0; j < m; j++) {
-                    box[k][i][j] = Integer.parseInt(input[j]);
+                    box[k][i][j] = read();
                     if (box[k][i][j] == 1) {
                         queue.add(new Tomato(k, i, j));
                     } else if (box[k][i][j] == -1) {
@@ -59,6 +54,16 @@ class Main {
         } else {
             System.out.println(day);
         }
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        boolean negative = n == 13;
+        if (negative) n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return negative ? ~n + 1 : n;
     }
 }
 
