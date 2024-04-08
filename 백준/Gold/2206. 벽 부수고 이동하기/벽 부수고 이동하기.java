@@ -38,9 +38,10 @@ class Main {
                 }
 
                 if (map[nr][nc] == '1') {
-                    if (now.broken) continue;
-                    queue.add(new Node(nr, nc, now.move + 1, !now.broken));
-                    visited[1][nr][nc] = true;
+                    if (!now.broken) {
+                        queue.add(new Node(nr, nc, now.move + 1, !now.broken));
+                        visited[1][nr][nc] = true;
+                    }
                 } else {
                     if (now.broken && !visited[1][nr][nc]) {
                         queue.add(new Node(nr, nc, now.move + 1, true));
