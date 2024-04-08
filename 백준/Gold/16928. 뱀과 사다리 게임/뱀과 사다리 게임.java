@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -8,14 +6,10 @@ import java.util.Queue;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        String[] input = br.readLine().split(" ");
-        int iter = Integer.parseInt(input[0]) + Integer.parseInt(input[1]);
+        int iter = read() + read();
         Map<Integer, Integer> snakeAndLadder = new HashMap<>();
         while (iter-- > 0) {
-            input = br.readLine().split(" ");
-            snakeAndLadder.put(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+            snakeAndLadder.put(read(), read());
         }
 
         boolean[] visited = new boolean[101];
@@ -42,6 +36,14 @@ class Main {
                 queue.add(new Node(nx, now.cnt + 1));
             }
         }
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
