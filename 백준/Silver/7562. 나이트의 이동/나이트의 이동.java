@@ -10,7 +10,7 @@ class Main {
     public static int sc;
     public static int er;
     public static int ec;
-    public static int[][] board;
+    public static boolean[][] visited;
     public static int[][] ds = {{2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
 
     public static StringBuilder sb = new StringBuilder();
@@ -33,17 +33,17 @@ class Main {
 
         System.out.println(sb);
     }
-    
+
     public static void bfs() {
-        board = new int[n][n];
+        visited = new boolean[n][n];
 
         Queue<Node> queue = new LinkedList<>();
-        queue.add(new Node(sr, sc));
-        board[sr][sc] = 1;
+        queue.add(new Node(sr, sc, 0));
+        visited[sr][sc] = true;
         while (!queue.isEmpty()) {
             Node now = queue.poll();
             if (now.r == er && now.c == ec) {
-                sb.append(board[now.r][now.c] - 1).append('\n');
+                sb.append(now.cnt).append('\n');
                 return;
             }
 
@@ -51,9 +51,9 @@ class Main {
                 int nr = now.r + d[0];
                 int nc = now.c + d[1];
 
-                if (isValid(nr, nc) && board[nr][nc] == 0) {
-                    queue.add(new Node(nr, nc));
-                    board[nr][nc] = board[now.r][now.c] + 1;
+                if (isValid(nr, nc) && !visited[nr][nc]) {
+                    queue.add(new Node(nr, nc, now.cnt + 1));
+                    visited[nr][nc] = true;
                 }
             }
         }
@@ -67,9 +67,11 @@ class Main {
 class Node {
     int r;
     int c;
+    int cnt;
 
-    public Node(int r, int c) {
+    public Node(int r, int c, int cnt) {
         this.r = r;
         this.c = c;
+        this.cnt = cnt;
     }
 }
