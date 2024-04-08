@@ -39,7 +39,7 @@ class Main {
 
                 if (map[nr][nc] == '1') {
                     if (!now.broken) {
-                        queue.add(new Node(nr, nc, now.move + 1, !now.broken));
+                        queue.add(new Node(nr, nc, now.move + 1, true));
                         visited[1][nr][nc] = true;
                     }
                 } else {
