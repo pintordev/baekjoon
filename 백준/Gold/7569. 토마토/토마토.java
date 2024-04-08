@@ -8,16 +8,18 @@ class Main {
         int n = read();
         int h = read();
 
-        int[][][] box = new int[h][n][m];
+        boolean[][][] visited = new boolean[h][n][m];
         int toRipe = m * n * h;
         Queue<Tomato> queue = new LinkedList<>();
         for (int k = 0; k < h; k++) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
-                    box[k][i][j] = read();
-                    if (box[k][i][j] == 1) {
-                        queue.add(new Tomato(k, i, j));
-                    } else if (box[k][i][j] == -1) {
+                    int riped = read();
+                    if (riped == 1) {
+                        queue.add(new Tomato(k, i, j, 0));
+                        visited[k][i][j] = true;
+                    } else if (riped == -1) {
+                        visited[k][i][j] = true;
                         toRipe--;
                     }
                 }
@@ -29,7 +31,7 @@ class Main {
         int day = 0;
         while (!queue.isEmpty()) {
             Tomato now = queue.poll();
-            day = Math.max(day, box[now.l][now.r][now.c] - 1);
+            day = now.day;
             toRipe--;
 
             for (int[] d : ds) {
@@ -40,12 +42,12 @@ class Main {
                 if (nl < 0 || nl >= h || nr < 0 || nr >= n || nc < 0 || nc >= m) {
                     continue;
                 }
-                if (box[nl][nr][nc] != 0) {
+                if (visited[nl][nr][nc]) {
                     continue;
                 }
 
-                box[nl][nr][nc] = box[now.l][now.r][now.c] + 1;
-                queue.add(new Tomato(nl, nr, nc));
+                queue.add(new Tomato(nl, nr, nc, now.day + 1));
+                visited[nl][nr][nc] = true;
             }
         }
 
@@ -71,10 +73,12 @@ class Tomato {
     int l;
     int r;
     int c;
+    int day;
 
-    public Tomato(int l, int r, int c) {
+    public Tomato(int l, int r, int c, int day) {
         this.l = l;
         this.r = r;
         this.c = c;
+        this.day = day;
     }
 }
