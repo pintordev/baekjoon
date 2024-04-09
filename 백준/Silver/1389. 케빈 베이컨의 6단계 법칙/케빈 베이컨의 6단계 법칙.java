@@ -8,17 +8,10 @@ class Main {
     public static void main(String[] args) throws IOException {
         readGraph();
         floydWarshall();
+        getMin();
     }
 
-    public static void floydWarshall() {
-        for (int k = 1; k <= n; k++) {
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
-                }
-            }
-        }
-
+    public static void getMin() {
         int minI = 0;
         int minV = Integer.MAX_VALUE;
         for (int i = 1; i <= n; i++) {
@@ -32,6 +25,16 @@ class Main {
             }
         }
         System.out.println(minI);
+    }
+
+    public static void floydWarshall() {
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
+                }
+            }
+        }
     }
 
     public static void readGraph() throws IOException {
