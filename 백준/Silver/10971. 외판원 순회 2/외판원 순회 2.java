@@ -32,6 +32,9 @@ class Main {
     }
 
     public static void dfs(int i, int start, int depth, int cost) {
+        if (cost > minCost) {
+            return;
+        }
         if (depth == n) {
             if (map[i][start] == 0) {
                 return;
