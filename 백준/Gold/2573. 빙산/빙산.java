@@ -20,15 +20,12 @@ class Main {
 
     public static void simulation() {
         int year = 0;
-        while (true) {
+        while (area < 2) {
             melt();
             year++;
             findArea();
-            if (area > 1) {
-                System.out.println(year);
-                break;
-            }
         }
+        System.out.println(year);
     }
 
     public static void melt() {
