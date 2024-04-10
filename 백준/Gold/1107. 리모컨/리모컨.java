@@ -3,35 +3,49 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Main {
+    public static boolean[] broken = new boolean[10];
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
 
-        boolean[] broken = new boolean[10];
+        int m = Integer.parseInt(br.readLine());
         if (m > 0) {
             String[] input = br.readLine().split(" ");
-            while (m-- > 0) {
-                broken[Integer.parseInt(input[m])] = true;
+            for (int i = 0; i < m; i++) {
+                broken[Integer.parseInt(input[i])] = true;
             }
         }
 
         int min = Math.abs(n - 100);
-        for (int i = 0; i <= 999999; i++) {
-            String s = String.valueOf(i);
-            int len = s.length();
-            boolean flag = true;
-            for (int j = 0; j < len; j++) {
-                if (broken[s.charAt(j) - '0']) {
-                    flag = false;
-                    break;
-                }
+        for (int i = 0; i < 1000000; i++) {
+            int len = lenIfCanMove(i);
+            if (len == 0) {
+                continue;
             }
-            if (flag) {
-                int cnt = len + Math.abs(n - i);
-                min = Math.min(min, cnt);
+            min = Math.min(min, len + Math.abs(n - i));
+        }
+
+        System.out.println(min);
+    }
+
+    public static int lenIfCanMove(int i) {
+        if (i == 0) {
+            if (broken[0]) {
+                return 0;
+            } else {
+                return 1;
             }
         }
-        System.out.println(min);
+
+        int len = 0;
+        while (i > 0) {
+            if (broken[i % 10]) {
+                return 0;
+            }
+            len++;
+            i /= 10;
+        }
+        return len;
     }
 }
