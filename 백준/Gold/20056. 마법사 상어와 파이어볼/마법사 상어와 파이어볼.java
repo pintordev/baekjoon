@@ -2,15 +2,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
 
 public class Main {
     public static int n;
     public static int k;
     public static Queue<FireBall> fireBalls = new ArrayDeque<>();
-    public static List<FireBall>[][] map;
+    public static FireBall[][] map;
     public static int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
     public static int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
     public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -37,49 +35,43 @@ public class Main {
                 fireBall.y += n;
             }
             fireBall.y %= n;
-            map[fireBall.x][fireBall.y].add(fireBall);
+            FireBall temp = map[fireBall.x][fireBall.y];
+            if (temp != null) {
+                temp.add(fireBall.m, fireBall.s, fireBall.d);
+            } else {
+                map[fireBall.x][fireBall.y] = fireBall;
+            }
         }
     }
 
     public static void split() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (map[i][j].size() < 2) {
-                    for (FireBall fireBall : map[i][j]) {
-                        fireBalls.add(fireBall);
-                    }
-                    map[i][j] = new ArrayList<>();
+                if (map[i][j] == null) {
                     continue;
                 }
 
-                int m = 0, s = 0, odd = 0, even = 0;
-                for (FireBall fireBall : map[i][j]) {
-                    m += fireBall.m;
-                    s += fireBall.s;
-                    if (fireBall.d % 2 == 0) {
-                        even++;
-                    } else {
-                        odd++;
-                    }
-                }
-
-                m /= 5;
-                s /= map[i][j].size();
-                map[i][j] = new ArrayList<>();
-
-                if (m == 0) {
+                if (map[i][j].size == 1) {
+                    fireBalls.add(map[i][j]);
+                    map[i][j] = null;
                     continue;
                 }
 
+                FireBall fireBall = map[i][j];
+                fireBall.m /= 5;
+                fireBall.s /= fireBall.size;
+                map[i][j] = null;
+                if (fireBall.m == 0) {
+                    continue;
+                }
                 int k;
-                if (odd == 0 || even == 0) {
+                if (fireBall.odd == 0 || fireBall.even == 0) {
                     k = 0;
                 } else {
                     k = 1;
                 }
-
                 for (; k < 8; k += 2) {
-                    fireBalls.add(new FireBall(i, j, m, s, k));
+                    fireBalls.add(new FireBall(i, j, fireBall.m, fireBall.s, k));
                 }
             }
         }
@@ -97,12 +89,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] input = br.readLine().split(" ");
         n = Integer.parseInt(input[0]);
-        map = new List[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                map[i][j] = new ArrayList<>();
-            }
-        }
+        map = new FireBall[n][n];
 
         int m = Integer.parseInt(input[1]);
         k = Integer.parseInt(input[2]);
@@ -122,15 +109,29 @@ public class Main {
 class FireBall {
     int x;
     int y;
-    int m;
-    int s;
+    int m = 0;
+    int s = 0;
     int d;
+
+    int size = 0;
+    int odd = 0;
+    int even = 0;
 
     public FireBall(int x, int y, int m, int s, int d) {
         this.x = x;
         this.y = y;
-        this.m = m;
-        this.s = s;
         this.d = d;
+        this.add(m, s, d);
+    }
+
+    public void add(int m, int s, int d) {
+        this.m += m;
+        this.s += s;
+        if (d % 2 == 0) {
+            even++;
+        } else {
+            odd++;
+        }
+        size++;
     }
 }
