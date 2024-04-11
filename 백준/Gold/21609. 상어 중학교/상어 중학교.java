@@ -80,7 +80,8 @@ public class Main {
         }
         if (group == null) {
             group = candidateGroup;
-        } else if (!group.compareTo(candidateGroup)) {
+        }
+        else if (!group.compareTo(candidateGroup)) {
             group = candidateGroup;
         }
     }
@@ -172,18 +173,18 @@ class Group {
 
     public Group() {
         this.rainbow = 0;
-        this.stdRow = 0;
-        this.stdCol = 0;
         this.blocks = new ArrayList<>();
     }
 
     public void add(Block block) {
+        if (this.blocks.isEmpty()) {
+            this.stdRow = block.r;
+            this.stdCol = block.c;
+        }
+        this.blocks.add(block);
         if (block.color == 0) {
             this.rainbow++;
         }
-        this.stdRow = Math.min(this.stdRow, block.r);
-        this.stdCol = Math.min(this.stdCol, block.c);
-        this.blocks.add(block);
     }
 
     public boolean compareTo(Group candidateGroup) {
