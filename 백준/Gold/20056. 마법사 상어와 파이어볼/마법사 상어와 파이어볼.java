@@ -1,13 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Main {
     public static int n;
     public static int k;
-    public static List<FireBall> fireBalls = new ArrayList<>();
+    public static Queue<FireBall> fireBalls = new ArrayDeque<>();
     public static List<FireBall>[][] map;
     public static int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
     public static int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -23,7 +25,8 @@ public class Main {
     }
 
     public static void move() {
-        for (FireBall fireBall : fireBalls) {
+        while (!fireBalls.isEmpty()) {
+            FireBall fireBall = fireBalls.poll();
             fireBall.x += dx[fireBall.d] * fireBall.s;
             while (fireBall.x < 0) {
                 fireBall.x += n;
@@ -42,6 +45,9 @@ public class Main {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (map[i][j].size() < 2) {
+                    for (FireBall fireBall : map[i][j]) {
+                        fireBalls.add(fireBall);
+                    }
                     map[i][j] = new ArrayList<>();
                     continue;
                 }
@@ -55,7 +61,6 @@ public class Main {
                     } else {
                         odd++;
                     }
-                    fireBalls.remove(fireBall);
                 }
 
                 m /= 5;
@@ -82,8 +87,8 @@ public class Main {
 
     public static void countMass() {
         int sum = 0;
-        for (FireBall fireBall : fireBalls) {
-            sum += fireBall.m;
+        while (!fireBalls.isEmpty()) {
+            sum += fireBalls.poll().m;
         }
         System.out.println(sum);
     }
