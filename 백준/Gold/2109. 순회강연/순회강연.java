@@ -1,20 +1,15 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int n = read();
 
         PriorityQueue<Lecture> pq = new PriorityQueue<>();
-        String[] input;
         int maxDay = 0;
         for (int i = 0; i < n; i++) {
-            input = br.readLine().split(" ");
-            int p = Integer.parseInt(input[0]);
-            int d = Integer.parseInt(input[1]);
+            int p = read();
+            int d = read();
             maxDay = Math.max(maxDay, d);
             pq.add(new Lecture(p, d));
         }
@@ -32,6 +27,14 @@ public class Main {
             }
         }
         System.out.println(sum);
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
