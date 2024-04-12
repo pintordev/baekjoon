@@ -46,8 +46,8 @@ public class Main {
                 pq.add(new Node(nx, ny, rupee[nx][ny]));
             }
         }
-
-        sb.append(String.format("Problem %d: %d\n", problem++, rupee[n - 1][n - 1]));
+        
+        sb.append("Problem ").append(problem++).append(": ").append(rupee[n - 1][n - 1]).append('\n');
     }
 
     public static boolean canMove(int nx, int ny, Node now) {
