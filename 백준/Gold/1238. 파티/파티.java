@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -55,11 +53,9 @@ public class Main {
     }
 
     public static void init() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
-        x = Integer.parseInt(input[2]);
+        n = read();
+        int m = read();
+        x = read();
 
         fGraph = new List[n + 1];
         rGraph = new List[n + 1];
@@ -74,13 +70,20 @@ public class Main {
         }
 
         while (m-- > 0) {
-            input = br.readLine().split(" ");
-            int start = Integer.parseInt(input[0]);
-            int end = Integer.parseInt(input[1]);
-            int time = Integer.parseInt(input[2]);
+            int start = read();
+            int end = read();
+            int time = read();
             fGraph[start].add(new Node(end, time));
             rGraph[end].add(new Node(start, time));
         }
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
