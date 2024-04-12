@@ -1,24 +1,22 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
+        int n = read();
+        int m = read();
 
         PriorityQueue<Integer> minQ = new PriorityQueue<>();
         PriorityQueue<Integer> maxQ = new PriorityQueue<>(Comparator.reverseOrder());
-        input = br.readLine().split(" ");
         int max = 0;
         for (int i = 0; i < n; i++) {
-            int num = Integer.parseInt(input[i]);
-            if (num < 0) minQ.add(num);
-            else maxQ.add(num);
+            int num = read();
+            if (num < 0) {
+                minQ.add(num);
+            } else {
+                maxQ.add(num);
+            }
             max = Math.max(max, Math.abs(num));
         }
 
@@ -44,5 +42,15 @@ public class Main {
         sum -= max;
 
         System.out.println(sum);
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        boolean negative = n == 13;
+        if (negative) n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return negative ? ~n + 1 : n;
     }
 }
