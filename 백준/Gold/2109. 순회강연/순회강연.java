@@ -47,7 +47,7 @@ class Lecture implements Comparable<Lecture> {
     @Override
     public int compareTo(Lecture o) {
         if (this.p == o.p) {
-            return this.d - o.d;
+            return o.d - this.d;
         }
         return o.p - this.p;
     }
