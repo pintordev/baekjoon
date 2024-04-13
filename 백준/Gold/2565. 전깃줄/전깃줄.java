@@ -1,18 +1,13 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int n = read();
 
         Wire[] wires = new Wire[n];
-        String[] input;
         for (int i = 0; i < n; i++) {
-            input = br.readLine().split(" ");
-            wires[i] = new Wire(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+            wires[i] = new Wire(read(), read());
         }
         Arrays.sort(wires);
 
@@ -28,6 +23,14 @@ public class Main {
             max = Math.max(max, memo[i]);
         }
         System.out.println(n - max);
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
 
