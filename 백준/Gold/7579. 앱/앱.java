@@ -1,25 +1,19 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
+        int n = read();
+        int m = read();
 
         int[] memory = new int[n];
-        input = br.readLine().split(" ");
         for (int i = 0; i < n; i++) {
-            memory[i] = Integer.parseInt(input[i]);
+            memory[i] = read();
         }
 
         int[] cost = new int[n];
         int maxCost = 0;
-        input = br.readLine().split(" ");
         for (int i = 0; i < n; i++) {
-            cost[i] = Integer.parseInt(input[i]);
+            cost[i] = read();
             maxCost += cost[i];
         }
 
@@ -36,5 +30,13 @@ public class Main {
                 break;
             }
         }
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
