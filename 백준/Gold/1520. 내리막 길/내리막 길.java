@@ -15,14 +15,18 @@ public class Main {
     }
 
     public static void dfs(int r, int c) {
-        if (memo[r][c] >= 0) return;
+        if (memo[r][c] >= 0) {
+            return;
+        }
 
         memo[r][c] = 0;
         for (int i = 0; i < 4; i++) {
             int nr = r + dr[i];
             int nc = c + dc[i];
 
-            if (!canMove(r, c, nr, nc)) continue;
+            if (!canMove(r, c, nr, nc)) {
+                continue;
+            }
             dfs(nr, nc);
             memo[r][c] += memo[nr][nc];
         }
