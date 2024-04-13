@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main {
     public static int m;
@@ -17,9 +15,7 @@ public class Main {
     }
 
     public static void dfs(int r, int c) {
-        if (memo[r][c] >= 0) {
-            return;
-        }
+        if (memo[r][c] >= 0) return;
 
         memo[r][c] = 0;
         for (int i = 0; i < 4; i++) {
@@ -37,20 +33,25 @@ public class Main {
     }
 
     public static void init() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        m = Integer.parseInt(input[0]);
-        n = Integer.parseInt(input[1]);
+        m = read();
+        n = read();
 
         map = new int[m][n];
         memo = new int[m][n];
         for (int i = 0; i < m; i++) {
-            input = br.readLine().split(" ");
             for (int j = 0; j < n; j++) {
-                map[i][j] = Integer.parseInt(input[j]);
+                map[i][j] = read();
                 memo[i][j] = -1;
             }
         }
         memo[m - 1][n - 1] = 1;
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
