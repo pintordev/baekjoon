@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main {
     public static int order;
@@ -42,25 +40,31 @@ public class Main {
     }
 
     public static void init() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        order = Integer.parseInt(br.readLine());
-
-        String[] input = br.readLine().split(" ");
-        m = Integer.parseInt(input[0]);
-        n = Integer.parseInt(input[1]);
+        order = read();
+        
+        m = read();
+        n = read();
 
         a = new int[m];
         for (int i = 0; i < m; i++) {
-            a[i] = Integer.parseInt(br.readLine());
+            a[i] = read();
         }
         b = new int[n];
         for (int i = 0; i < n; i++) {
-            b[i] = Integer.parseInt(br.readLine());
+            b[i] = read();
         }
 
         aMap = new int[order + 1];
         bMap = new int[order + 1];
         aMap[0] = 1;
         bMap[0] = 1;
+    }
+    
+    public static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32) {
+            n = (n << 3) + (n << 1) + (c & 15);
+        }
+        return n;
     }
 }
