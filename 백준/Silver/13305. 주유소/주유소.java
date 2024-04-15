@@ -13,9 +13,9 @@ public class Main {
     }
 
     public static void simulate() {
-        int fee = 0;
+        long fee = 0;
         for (int i = 0; i < n; i++) {
-            int sum = 0;
+            long sum = 0;
             int j = i;
             for (; j < n && station[i] <= station[j]; j++) {
                 sum += road[j];
