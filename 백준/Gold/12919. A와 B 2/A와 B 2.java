@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 public class Main {
     public static String s;
     public static int limit;
+    public static boolean flag;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -12,14 +13,20 @@ public class Main {
         String t = br.readLine();
         limit = t.length() - s.length();
         recursion(t, 0);
-        System.out.println(0);
+        if (flag) {
+            System.out.println(1);
+        } else {
+            System.out.println(0);
+        }
     }
 
     public static void recursion(String t, int depth) {
+        if (flag) {
+            return;
+        }
         if (depth == limit) {
             if (t.equals(s)) {
-                System.out.println(1);
-                System.exit(0);
+                flag = true;
             }
             return;
         }
