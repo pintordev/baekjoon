@@ -1,17 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
-    public static int wanted;
+    public static int order;
     public static int m;
     public static int n;
     public static int[] a;
     public static int[] b;
-    public static Map<Integer, Integer> aMap = new HashMap<>();
-    public static Map<Integer, Integer> bMap = new HashMap<>();
+    public static int[] aMap;
+    public static int[] bMap;
 
     public static void main(String[] args) throws IOException {
         init();
@@ -20,38 +18,32 @@ public class Main {
         findCase();
     }
 
-    public static void prefixSum(int len, int[] p, Map<Integer, Integer> map) {
+    public static void prefixSum(int len, int[] p, int[] map) {
         int[] prefixSum = new int[len];
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len - 1; i++) {
             for (int j = 0; j < len; j++) {
                 prefixSum[j] += p[(j + i) % len];
-                Integer value = map.putIfAbsent(prefixSum[j], 1);
-                if (value != null) {
-                    map.put(prefixSum[j], value + 1);
-                }
-                if (i == len - 1) {
-                    break;
+                if (prefixSum[j] <= order) {
+                    map[prefixSum[j]]++;
                 }
             }
+        }
+        if (prefixSum[0] + p[len - 1] <= order) {
+            map[prefixSum[0] + p[len - 1]]++;
         }
     }
 
     public static void findCase() {
         int cnt = 0;
-        for (int key : aMap.keySet()) {
-            if (key == wanted) {
-                cnt += aMap.get(key);
-                continue;
-            }
-            cnt += aMap.get(key) * bMap.getOrDefault(wanted - key, 0);
+        for (int i = 0; i <= order; i++) {
+            cnt += aMap[i] * bMap[order - i];
         }
-        cnt += bMap.getOrDefault(wanted, 0);
         System.out.println(cnt);
     }
 
     public static void init() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        wanted = Integer.parseInt(br.readLine());
+        order = Integer.parseInt(br.readLine());
 
         String[] input = br.readLine().split(" ");
         m = Integer.parseInt(input[0]);
@@ -65,5 +57,10 @@ public class Main {
         for (int i = 0; i < n; i++) {
             b[i] = Integer.parseInt(br.readLine());
         }
+
+        aMap = new int[order + 1];
+        bMap = new int[order + 1];
+        aMap[0] = 1;
+        bMap[0] = 1;
     }
 }
