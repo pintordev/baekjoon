@@ -4,30 +4,30 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static String s;
-    public static String t;
     public static int limit;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         s = br.readLine();
-        t = br.readLine();
+        String t = br.readLine();
         limit = t.length() - s.length();
-        recursion(s, 0);
+        recursion(t, 0);
         System.out.println(0);
     }
 
-    public static void recursion(String s, int depth) {
+    public static void recursion(String t, int depth) {
         if (depth == limit) {
-            if (s.equals(t)) {
+            if (t.equals(s)) {
                 System.out.println(1);
                 System.exit(0);
             }
             return;
         }
-        if (!t.contains(s) && !t.contains(new StringBuilder(s).reverse().toString())) {
-            return;
+        if (t.charAt(t.length() - 1) == 'A') {
+            recursion(t.substring(0, t.length() - 1), depth + 1);
         }
-        recursion(new StringBuilder(s).append('A').toString(), depth + 1);
-        recursion(new StringBuilder(s).append('B').reverse().toString(), depth + 1);
+        if (t.charAt(0) == 'B') {
+            recursion(new StringBuilder(t.substring(1)).reverse().toString(), depth + 1);
+        }
     }
 }
