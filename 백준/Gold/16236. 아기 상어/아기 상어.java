@@ -1,13 +1,12 @@
 import java.io.IOException;
 import java.util.ArrayDeque;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Main {
     public static int n;
     public static int[][] map;
     public static Shark shark;
-    public static PriorityQueue<Fish> fishes;
+    public static Fish fish;
     public static boolean[][] visited;
     public static int[] dr = {0, 1, 0, -1};
     public static int[] dc = {1, 0, -1, 0};
@@ -20,18 +19,17 @@ public class Main {
     public static void simulate() {
         while (true) {
             findFish();
-            if (fishes.isEmpty()) {
+            if (fish == null) {
                 break;
             }
-            Fish toEat = fishes.poll();
-            shark.eat(toEat);
-            map[toEat.r][toEat.c] = 0;
+            shark.eat(fish);
+            map[fish.r][fish.c] = 0;
         }
         System.out.println(shark.time);
     }
 
     public static void findFish() {
-        fishes = new PriorityQueue<>();
+        fish = null;
         visited = new boolean[n][n];
 
         Queue<Fish> queue = new ArrayDeque<>();
@@ -41,7 +39,11 @@ public class Main {
             Fish now = queue.poll();
 
             if (map[now.r][now.c] != 0 && map[now.r][now.c] < shark.size) {
-                fishes.add(now);
+                if (fish == null) {
+                    fish = now;
+                } else if (!fish.compareTo(now)) {
+                    fish = now;
+                }
             }
 
             for (int i = 0; i < 4; i++) {
@@ -110,7 +112,7 @@ class Shark {
     }
 }
 
-class Fish implements Comparable<Fish> {
+class Fish {
     int r;
     int c;
     int dist;
@@ -121,14 +123,13 @@ class Fish implements Comparable<Fish> {
         this.dist = dist;
     }
 
-    @Override
-    public int compareTo(Fish o) {
+    public boolean compareTo(Fish o) {
         if (this.dist == o.dist && this.r == o.r) {
-            return this.c - o.c;
+            return this.c <= o.c;
         } else if (this.dist == o.dist) {
-            return this.r - o.r;
+            return this.r <= o.r;
         } else {
-            return this.dist - o.dist;
+            return this.dist <= o.dist;
         }
     }
 }
