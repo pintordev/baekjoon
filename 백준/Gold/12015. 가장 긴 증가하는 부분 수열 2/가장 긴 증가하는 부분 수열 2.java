@@ -1,32 +1,31 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
 
-        List<Integer> lis = new ArrayList<>();
-        lis.add(read());
+        int[] lis = new int[n];
+        lis[0] = read();
+        int idx = 0;
         for (int i = 1; i < n; i++) {
             int num = read();
-            if (lis.get(lis.size() - 1) < num) {
-                lis.add(num);
+            if (lis[idx] < num) {
+                lis[++idx] = num;
                 continue;
             }
 
             int low = 0;
-            int high = lis.size() - 1;
+            int high = idx;
             while (low + 1 < high) {
                 int mid = (low + high) >> 1;
-                if (lis.get(mid) < num) low = mid;
+                if (lis[mid] < num) low = mid;
                 else high = mid;
             }
 
-            if (lis.get(low) >= num) lis.set(low, num);
-            else lis.set(high, num);
+            if (lis[low] >= num) lis[low] = num;
+            else lis[high] = num;
         }
-        System.out.println(lis.size());
+        System.out.println(++idx);
     }
 
     public static int read() throws IOException {
