@@ -4,15 +4,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
         int t = read();
 
+        int[] ps = new int[501];
+        int[][] memo = new int[501][501];
+
         StringBuilder sb = new StringBuilder();
         while (t-- > 0) {
             int k = read();
-            int[] ps = new int[k + 1];
             for (int i = 1; i <= k; i++) {
                 ps[i] = ps[i - 1] + read();
             }
 
-            int[][] memo = new int[k + 1][k + 1];
             for (int len = 1; len <= k; len++) {
                 for (int s = 1; s + len <= k; s++) {
                     int e = s + len;
