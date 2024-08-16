@@ -6,34 +6,26 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
         while (t-- > 0) {
-            sb.append(simulate()).append('\n');
+            int k = read();
+            int[] ps = new int[k + 1];
+            for (int i = 1; i <= k; i++) {
+                ps[i] = ps[i - 1] + read();
+            }
+
+            int[][] memo = new int[k + 1][k + 1];
+            for (int len = 1; len <= k; len++) {
+                for (int s = 1; s + len <= k; s++) {
+                    int e = s + len;
+                    memo[s][e] = Integer.MAX_VALUE;
+                    for (int i = s; i < e; i++) {
+                        memo[s][e] = Math.min(memo[s][e], memo[s][i] + memo[i + 1][e]);
+                    }
+                    memo[s][e] += ps[e] - ps[s - 1];
+                }
+            }
+            sb.append(memo[1][k]).append('\n');
         }
         System.out.println(sb);
-    }
-
-    public static int[] ps;
-    public static int[][] memo;
-
-    public static int simulate() throws IOException {
-        int k = read();
-        ps = new int[k + 1];
-        for (int i = 1; i <= k; i++) {
-            ps[i] = ps[i - 1] + read();
-        }
-
-        memo = new int[k + 1][k + 1];
-        return dp(1, k);
-    }
-
-    public static int dp(int s, int e) {
-        if (s == e) return 0;
-        if (memo[s][e] != 0) return memo[s][e];
-
-        int min = Integer.MAX_VALUE;
-        for (int i = s; i < e; i++) {
-            min = Math.min(min, dp(s, i) + dp(i + 1, e));
-        }
-        return memo[s][e] = min + ps[e] - ps[s - 1];
     }
 
     public static int read() throws IOException {
