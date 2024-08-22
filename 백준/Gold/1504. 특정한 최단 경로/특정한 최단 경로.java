@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class Main {
-    public static int INF = Integer.MAX_VALUE;
+    public static int INF = Integer.MAX_VALUE / 3;
     public static List<Node>[] graph;
     public static int[] dist;
 
@@ -28,18 +28,20 @@ public class Main {
         int u = read();
         int v = read();
         dist = new int[n + 1];
-        System.out.println(Math.min(simulate(u, v, n), simulate(v, u, n)));
-    }
 
-    public static int simulate(int i, int j, int k) {
-        int min = 0;
-        int[] nodes = {1, i, j, k};
-        for (int l = 0; l < 3; l++) {
-            dijkstra(nodes[l]);
-            if (dist[nodes[l + 1]] == INF) return -1;
-            min += dist[nodes[l + 1]];
-        }
-        return min;
+        dijkstra(1);
+        int su = dist[u];
+        int sv = dist[v];
+
+        dijkstra(u);
+        int uv = dist[v];
+        int un = dist[n];
+
+        dijkstra(v);
+        int vn = dist[n];
+
+        int min = Math.min(su + uv + vn, sv + uv + un);
+        System.out.println(min >= INF ? -1 : min);
     }
 
     public static void dijkstra(int from) {
