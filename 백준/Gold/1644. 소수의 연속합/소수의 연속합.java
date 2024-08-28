@@ -17,13 +17,10 @@ public class Main {
         np = new boolean[n + 1];
         np[0] = np[1] = true;
 
-        int cnt = n - 1;
         for (int i = 2; i * i <= n; i++) {
             if (np[i]) continue;
-            for (int j = i << 1; j <= n; j += i) {
-                if (np[j]) continue;
+            for (int j = i * i; j <= n; j += i) {
                 np[j] = true;
-                cnt--;
             }
         }
     }
