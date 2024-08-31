@@ -4,27 +4,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
 
-        int[][] memo = new int[n + 1][2];
+        int[] memo = new int[n + 1];
         for (int i = 2; i <= n; i++) {
-            memo[i][0] = memo[i - 1][0] + 1;
-            memo[i][1] = i - 1;
-
-            if (i % 2 == 0 && memo[i][0] > memo[i / 2][0] + 1) {
-                memo[i][0] = memo[i / 2][0] + 1;
-                memo[i][1] = i / 2;
-            }
-
-            if (i % 3 == 0 && memo[i][0] > memo[i / 3][0] + 1) {
-                memo[i][0] = memo[i / 3][0] + 1;
-                memo[i][1] = i / 3;
-            }
+            memo[i] = memo[i - 1] + 1;
+            if (i % 2 == 0) memo[i] = Math.min(memo[i], memo[i / 2] + 1);
+            if (i % 3 == 0) memo[i] = Math.min(memo[i], memo[i / 3] + 1);
         }
 
-        StringBuilder sb = new StringBuilder()
-                .append(memo[n][0]).append('\n');
+        StringBuilder sb = new StringBuilder();
+        sb.append(memo[n]).append('\n');
         while (n > 0) {
             sb.append(n).append(' ');
-            n = memo[n][1];
+            if (n % 3 == 0 && memo[n] == memo[n / 3] + 1) n /= 3;
+            else if (n % 2 == 0 && memo[n] == memo[n / 2] + 1) n /= 2;
+            else n--;
         }
         System.out.println(sb);
     }
