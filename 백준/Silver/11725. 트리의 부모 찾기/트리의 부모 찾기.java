@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Main {
     public static int n;
@@ -24,7 +26,7 @@ public class Main {
 
         parent = new int[n + 1];
         visited = new boolean[n + 1];
-        dfs(1);
+        bfs();
 
         StringBuilder sb = new StringBuilder();
         for (int i = 2; i <= n; i++) {
@@ -33,12 +35,19 @@ public class Main {
         System.out.println(sb);
     }
 
-    public static void dfs(int idx) {
-        visited[idx] = true;
-        for (int i : tree[idx]) {
-            if (visited[i]) continue;
-            parent[i] = idx;
-            dfs(i);
+    public static void bfs() {
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(1);
+        visited[1] = true;
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            for (int next : tree[cur]) {
+                if (visited[next]) continue;
+                q.add(next);
+                visited[next] = true;
+                parent[next] = cur;
+            }
         }
     }
 
