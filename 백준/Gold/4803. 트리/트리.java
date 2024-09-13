@@ -1,8 +1,6 @@
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class Main {
     public static List<Integer>[] graph;
@@ -42,30 +40,21 @@ public class Main {
 
         int cnt = 0;
         for (int i = 1; i <= n; i++) {
-            if (!visited[i] && bfs(i)) cnt++;
+            if (!visited[i] && dfs(i, -1)) cnt++;
         }
         return cnt;
     }
 
-    public static boolean bfs(int s) {
-        Queue<Integer> q = new ArrayDeque<>();
-        q.add(s);
-        visited[s] = true;
-
-        int node = 0;
-        int edge = 0;
-        while (!q.isEmpty()) {
-            int cur = q.poll();
-            node++;
-            visited[cur] = true;
-
-            for (int next : graph[cur]) {
-                edge++;
-                if (!visited[next]) q.add(next);
-            }
+    public static boolean dfs(int p, int pp) {
+        visited[p] = true;
+        for (int c : graph[p]) {
+            if (!visited[c]) {
+                if (!dfs(c, p)) return false;
+            } else if (c != pp) return false;
         }
-        return edge >> 1 == node - 1;
+        return true;
     }
+
 
     public static int read() throws IOException {
         int c, n = System.in.read() & 15;
