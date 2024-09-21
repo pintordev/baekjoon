@@ -56,8 +56,7 @@ public class Main {
     public static void union(int x, int y) {
         x = find(x);
         y = find(y);
-        if (x > y) parent[x] = y;
-        else parent[y] = x;
+        if (x != y) parent[x] = y;
     }
 
     public static int read() throws IOException {
