@@ -94,6 +94,6 @@ class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge o) {
-        return Double.compare(this.w, o.w);
+        return this.w > o.w ? 1 : -1;
     }
 }
