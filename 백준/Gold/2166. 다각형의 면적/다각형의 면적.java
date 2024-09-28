@@ -18,7 +18,7 @@ public class Main {
             sum += (long) x[i] * y[i + 1];
             sum -= (long) y[i] * x[i + 1];
         }
-        System.out.println(String.format("%.1f", Math.abs(sum) / 2.0));
+        System.out.printf("%.1f", Math.abs(sum) / 2.0);
     }
 
     public static int read() throws IOException {
