@@ -16,8 +16,8 @@ public class Main {
         for (int i = 0; i < m; i++) {
             int a = read();
             int b = read();
-            sb.append(tree.query(0, 1, 1, n, a, b)).append(' ')
-                    .append(tree.query(1, 1, 1, n, a, b)).append('\n');
+            sb.append(tree.min(1, 1, n, a, b)).append(' ')
+                    .append(tree.max(1, 1, n, a, b)).append('\n');
         }
         System.out.println(sb);
     }
@@ -35,42 +35,46 @@ class SegmentTree {
     public static int ul = 1_000_000_000;
     public static int ll = 0;
 
-    public int[] min;
-    public int[] max;
+    public int[] minTree;
+    public int[] maxTree;
     public int[] arr;
 
     public SegmentTree(int n, int[] arr) {
         this.arr = arr;
         int h = (int) Math.ceil(Math.log(n) / Math.log(2));
-        min = new int[1 << (h + 1)];
-        max = new int[1 << (h + 1)];
-        init(0,1, 1, n);
-        init(1, 1, 1, n);
+        minTree = new int[1 << (h + 1)];
+        minInit(1, 1, n);
+        maxTree = new int[1 << (h + 1)];
+        maxInit(1, 1, n);
     }
 
-    public int init(int type, int cur, int s, int e) {
-        if (s == e) {
-            if (type == 0) return min[cur] = arr[s];
-            else return max[cur] = arr[s];
-        }
+    public int minInit(int cur, int s, int e) {
+        if (s == e) return minTree[cur] = arr[s];
         int next = cur << 1;
         int mid = (s + e) >> 1;
-        if (type == 0) return min[cur] = Math.min(init(type, next, s, mid), init(type, next + 1, mid + 1, e));
-        else return max[cur] = Math.max(init(type, next, s, mid), init(type, next + 1, mid + 1, e));
+        return minTree[cur] = Math.min(minInit(next, s, mid), minInit(next + 1, mid + 1, e));
     }
 
-    public int query(int type, int cur, int s, int e, int l, int r) {
-        if (e < l || r < s) {
-            if (type == 0) return ul;
-            else return ll;
-        }
-        if (l <= s && e <= r) {
-            if (type == 0) return min[cur];
-            else return max[cur];
-        }
+    public int maxInit(int cur, int s, int e) {
+        if (s == e) return maxTree[cur] = arr[s];
         int next = cur << 1;
         int mid = (s + e) >> 1;
-        if (type == 0) return Math.min(query(type, next, s, mid, l, r), query(type, next + 1, mid + 1, e, l, r));
-        else return Math.max(query(type, next, s, mid, l, r), query(type, next + 1, mid + 1, e, l, r));
+        return maxTree[cur] = Math.max(maxInit(next, s, mid), maxInit(next + 1, mid + 1, e));
+    }
+
+    public int min(int cur, int s, int e, int l, int r) {
+        if (e < l || r < s) return ul;
+        if (l <= s && e <= r) return minTree[cur];
+        int next = cur << 1;
+        int mid = (s + e) >> 1;
+        return Math.min(min(next, s, mid, l, r), min(next + 1, mid + 1, e, l, r));
+    }
+
+    public int max(int cur, int s, int e, int l, int r) {
+        if (e < l || r < s) return ll;
+        if (l <= s && e <= r) return maxTree[cur];
+        int next = cur << 1;
+        int mid = (s + e) >> 1;
+        return Math.max(max(next, s, mid, l, r), max(next + 1, mid + 1, e, l, r));
     }
 }
