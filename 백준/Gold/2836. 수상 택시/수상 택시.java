@@ -14,16 +14,10 @@ public class Main {
             if (s <= e) continue;
             passengers.add(new Passenger(s, e));
         }
-
-        if (passengers.isEmpty()) {
-            System.out.println(m);
-            return;
-        }
-
         passengers.sort(Passenger::compareTo);
 
-        long dis = passengers.get(0).s - passengers.get(0).e;
-        int prev = passengers.get(0).s;
+        long dis = 0;
+        int prev = 0;
         for (Passenger p : passengers) {
             if (prev >= p.s) continue;
             if (prev >= p.e) dis += p.s - prev;
