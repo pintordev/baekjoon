@@ -1,24 +1,23 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
         int m = read();
 
-        List<Passenger> passengers = new ArrayList<>();
+        PriorityQueue<Passenger> passengers = new PriorityQueue<>();
         while (n-- > 0) {
             int s = read();
             int e = read();
             if (s <= e) continue;
             passengers.add(new Passenger(s, e));
         }
-        passengers.sort(Passenger::compareTo);
 
         long dis = 0;
         int prev = 0;
-        for (Passenger p : passengers) {
+        while (!passengers.isEmpty()) {
+            Passenger p = passengers.poll();
             if (prev >= p.s) continue;
             if (prev >= p.e) dis += p.s - prev;
             else dis += p.s - p.e;
