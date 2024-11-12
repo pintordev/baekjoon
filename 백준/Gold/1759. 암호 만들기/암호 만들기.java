@@ -1,7 +1,10 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Set;
 
 public class Main {
+    public static Set<Character> vowels = Set.of('a', 'e', 'i', 'o', 'u');
+    
     public static void main(String[] args) throws IOException {
         int l = read();
         int c = read();
@@ -19,7 +22,7 @@ public class Main {
             for (int j = c - 1; j >= 0; j--) {
                 if ((i & 1 << j) == 0) continue;
                 temp.append(a[c - j - 1]);
-                if (a[c - j - 1] == 'a' || a[c - j - 1] == 'e' || a[c - j - 1] == 'i' || a[c - j - 1] == 'o' || a[c - j - 1] == 'u') vow++;
+                if (vowels.contains(a[c - j - 1])) vow++;
                 else con++;
             }
             if (con > 1 && vow > 0) sb.append(temp).append('\n');
