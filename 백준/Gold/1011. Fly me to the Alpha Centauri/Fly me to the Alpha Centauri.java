@@ -14,9 +14,9 @@ public class Main {
     public static int simulate(int x, int y) {
         int dist = y - x;
         int n = (int) Math.sqrt(dist);
-        if (n == Math.sqrt(dist)) return 2 * n - 1;
-        if (dist <= n * n + n) return 2 * n;
-        return 2 * n + 1;
+        if (n == Math.sqrt(dist)) return (n << 1) - 1;
+        if (dist <= n * n + n) return n << 1;
+        return (n << 1) + 1;
     }
 
     public static int read() throws IOException {
