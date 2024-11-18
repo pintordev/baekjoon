@@ -10,8 +10,7 @@ public class Main {
     public static List<Integer>[] graph;
     public static int min = Integer.MAX_VALUE;
     public static boolean[] selected;
-    public static List<Integer> a;
-    public static List<Integer> b;
+    public static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         n = read();
@@ -32,61 +31,61 @@ public class Main {
         }
 
         selected = new boolean[n + 1];
-        divide(1);
+        for (int i = 1; i <= (n >> 1); i++) {
+            divide(1, 0, i);
+        }
         System.out.println(min == Integer.MAX_VALUE ? -1 : min);
     }
 
-    public static void divide(int idx) {
-        if (idx > n) {
-            a = new ArrayList<>();
-            b = new ArrayList<>();
-
-            for (int i = 1; i <= n; i++) {
-                if (selected[i]) a.add(i);
-                else b.add(i);
-            }
-
-            if (a.size() == 0 || b.size() == 0) return;
-            if (!isConnected(a) || !isConnected(b)) return;
-
-            min = Math.min(min, getDiff(a, b));
+    public static void divide(int s, int depth, int limit) {
+        if (depth == limit) {
+            if (isConnected()) min = Math.min(min, getDiff());
             return;
         }
 
-        selected[idx] = true;
-        divide(idx + 1);
-        selected[idx] = false;
-        divide(idx + 1);
+        for (int i = s; i <= n; i++) {
+            selected[i] = true;
+            divide(i + 1, depth + 1, limit);
+            selected[i] = false;
+        }
     }
 
-    public static boolean isConnected(List<Integer> list) {
-        boolean[] visited = new boolean[n + 1];
+    public static boolean isConnected() {
+        visited = new boolean[n + 1];
 
+        bfs(1, selected[1]);
+        for (int i = 2; i <= n; i++) {
+            if (visited[i]) continue;
+            bfs(i, selected[i]);
+            break;
+        }
+
+        for (int i = 2; i <= n; i++) {
+            if (!visited[i]) return false;
+        }
+        return true;
+    }
+
+    public static void bfs(int idx, boolean flag) {
         Queue<Integer> q = new ArrayDeque<>();
-        int idx = list.get(0);
         q.add(idx);
         visited[idx] = true;
 
-        int cnt = 1;
-        while(!q.isEmpty()) {
+        while (!q.isEmpty()) {
             int cur = q.poll();
             for (int next : graph[cur]) {
-                if (visited[next] || !list.contains(next)) continue;
+                if (visited[next] || (selected[next] ^ flag)) continue;
                 q.add(next);
                 visited[next] = true;
-                cnt++;
             }
         }
-        return list.size() == cnt;
     }
 
-    public static int getDiff(List<Integer> a, List<Integer> b) {
+    public static int getDiff() {
         int sum = 0;
-        for (int i : a) {
-            sum += population[i];
-        }
-        for (int i : b) {
-            sum -= population[i];
+        for (int i = 1; i <= n; i++) {
+            if (selected[i]) sum += population[i];
+            else sum -= population[i];
         }
         return Math.abs(sum);
     }
