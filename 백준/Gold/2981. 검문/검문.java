@@ -1,4 +1,7 @@
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -9,25 +12,33 @@ public class Main {
             numbers[i] = read();
         }
 
-        int gcd = gcd(numbers);
+        int gcd = Math.abs(numbers[1] - numbers[0]);
+        for (int i = 2; i < n; i++) {
+            gcd = gcd(gcd, Math.abs(numbers[i] - numbers[i - 1]));
+        }
+
+        Queue<Integer> f = new ArrayDeque<>();
+        Stack<Integer> b = new Stack<>();
+        b.add(gcd);
+        for (int i = 2; i * i <= gcd; i++) {
+            if (gcd % i != 0) continue;
+            f.add(i);
+            if (i * i == gcd) continue;
+            b.add(gcd / i);
+        }
+
         StringBuilder sb = new StringBuilder();
-        for (int i = 2; i <= gcd; i++) {
-            if (gcd % i == 0) sb.append(i).append(' ');
+        while (!f.isEmpty()) {
+            sb.append(f.poll()).append(' ');
+        }
+        while (!b.isEmpty()) {
+            sb.append(b.pop()).append(' ');
         }
         System.out.println(sb);
     }
 
-    public static int gcd(int[] numbers) {
-        int gcd = Math.abs(numbers[0] - numbers[1]);
-        for (int i = 2; i < numbers.length; i++) {
-            gcd = gcd(gcd, Math.abs(numbers[i] - numbers[i - 1]));
-        }
-        return gcd;
-    }
-
     public static int gcd(int a, int b) {
-        if (b == 0) return a;
-        return gcd(b, a % b);
+        return b == 0 ? a : gcd(b, a % b);
     }
 
     public static int read() throws IOException {
