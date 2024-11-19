@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -11,10 +12,11 @@ public class Main {
         for (int i = 0; i < n; i++) {
             numbers[i] = read();
         }
+        Arrays.sort(numbers);
 
-        int gcd = Math.abs(numbers[1] - numbers[0]);
+        int gcd = numbers[1] - numbers[0];
         for (int i = 2; i < n; i++) {
-            gcd = gcd(gcd, Math.abs(numbers[i] - numbers[i - 1]));
+            gcd = gcd(gcd, numbers[i] - numbers[i - 1]);
         }
 
         Queue<Integer> f = new ArrayDeque<>();
