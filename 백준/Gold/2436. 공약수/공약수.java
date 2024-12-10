@@ -7,10 +7,11 @@ public class Main {
 
         long m = (long) gcd * lcm;
         for (int i = (int) Math.sqrt(m) / gcd * gcd; i >= gcd; i -= gcd) {
-            if (m % i == 0 && gcd(i, m / i) == gcd) {
-                System.out.println(i + " " + m / i);
-                break;
-            }
+            if (m % i != 0 || gcd(i, m / i) != gcd) continue;
+            StringBuilder sb = new StringBuilder();
+            sb.append(i).append(' ').append(m / i);
+            System.out.println(sb);
+            return;
         }
     }
 
