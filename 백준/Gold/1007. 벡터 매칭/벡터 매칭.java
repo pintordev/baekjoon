@@ -12,33 +12,32 @@ public class Main {
         while (t-- > 0) {
             n = read();
 
+            int x = 0;
+            int y = 0;
             nodes = new Node[n];
             for (int i = 0; i < n; i++) {
                 nodes[i] = new Node(read(), read());
+                x += nodes[i].x;
+                y += nodes[i].y;
             }
 
             min = Double.MAX_VALUE;
-            comb(0, n >> 1, 0, 0);
+            comb(0, n >> 1, x, y);
             sb.append(min).append('\n');
 
         }
         System.out.println(sb);
     }
 
-    public static void comb(int idx, int cnt, double x, double y) {
+    public static void comb(int prev, int cnt, int x, int y) {
         if (cnt == 0) {
-            for (int i = idx; i < n; i++) {
-                x -= nodes[i].x;
-                y -= nodes[i].y;
-            }
-            min = Math.min(min, Math.sqrt(x * x + y * y));
+            min = Math.min(min, Math.sqrt((double) x * x + (double) y * y));
             return;
         }
 
-        if (idx == n) return;
-
-        comb(idx + 1, cnt - 1, x + nodes[idx].x, y + nodes[idx].y);
-        comb(idx + 1, cnt, x - nodes[idx].x, y - nodes[idx].y);
+        for (int i = prev; i < n; i++) {
+            comb(i + 1, cnt - 1, x - nodes[i].x * 2, y - nodes[i].y * 2);
+        }
     }
 
     public static int read() throws IOException {
