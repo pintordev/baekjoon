@@ -14,7 +14,7 @@ public class Main {
         }
         k -= 1;
 
-        long num = (int) Math.pow(10, len - 1) + k / len;
+        long num = (long) Math.pow(10, len - 1) + k / len;
         if (num > n) System.out.println(-1);
         else System.out.println(String.valueOf(num).charAt((int) (k % len)));
     }
