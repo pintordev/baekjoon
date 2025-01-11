@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -17,8 +18,8 @@ public class Main {
 
         int n = read();
         while (n-- > 0) {
-            if (root.insert(readString())) continue;
-            while (n-- > 0) readString();
+            if (root.insert(readChars(10))) continue;
+            while (n-- > 0) readChars(10);
             return false;
         }
         return true;
@@ -32,13 +33,11 @@ public class Main {
         return n;
     }
 
-    public static String readString() throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int c;
-        while ((c = System.in.read()) > 32) {
-            sb.append((char) c);
-        }
-        return sb.toString();
+    public static char[] readChars(int len) throws IOException {
+        char[] c = new char[len];
+        int idx = 0, ch;
+        while ((ch = System.in.read()) > 32) c[idx++] = (char) ch;
+        return Arrays.copyOf(c, idx);
     }
 }
 
@@ -50,11 +49,11 @@ class TrieNode {
         children = new TrieNode[10];
     }
 
-    public boolean insert(String s) {
+    public boolean insert(char[] numbers) {
         TrieNode node = this;
 
-        for (char c : s.toCharArray()) {
-            int idx = c - '0';
+        for (char c : numbers) {
+            int idx = c & 15;
             if (node.children[idx] == null) node.children[idx] = new TrieNode();
             if (node.eof) return false;
             node = node.children[idx];
