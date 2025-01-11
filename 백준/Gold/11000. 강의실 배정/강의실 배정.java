@@ -39,7 +39,6 @@ class Class implements Comparable<Class> {
 
     @Override
     public int compareTo(Class o) {
-        if (this.start == o.start) return this.end - o.end;
         return this.start - o.start;
     }
 }
