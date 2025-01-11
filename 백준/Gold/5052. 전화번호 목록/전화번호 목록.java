@@ -54,8 +54,8 @@ class TrieNode {
 
         for (char c : numbers) {
             int idx = c & 15;
-            if (node.children[idx] == null) node.children[idx] = new TrieNode();
             if (node.eof) return false;
+            if (node.children[idx] == null) node.children[idx] = new TrieNode();
             node = node.children[idx];
         }
 
