@@ -1,18 +1,20 @@
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
 
         int[] children = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            int j = read();
-            children[j] = children[j - 1] + 1;
+        for (int i = 1; i <= n; i++) {
+            children[read()] = i;
         }
 
-        Arrays.sort(children);
-        System.out.println(n - children[n]);
+        int max = 1, cnt = 0;
+        for (int i = 1; i <= n; i++) {
+            if (children[i] > children[i - 1]) max = Math.max(max, ++cnt);
+            else cnt = 1;
+        }
+        System.out.println(n - max);
     }
 
     public static int read() throws IOException {
