@@ -4,22 +4,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         int n = read();
 
-        char[][] map = new char[n][];
+        int[] r = new int[n];
         for (int i = 0; i < n; i++) {
-            map[i] = readChars(n);
+            char[] c = readChars(n);
+            for (int j = 0; j < n; j++) {
+                r[i] |= (c[j] == 'T' ? 1 : 0) << j;
+            }
         }
 
         int min = Integer.MAX_VALUE;
         for (int bit = 0; bit < (1 << n); bit++) {
             int cnt = 0;
             for (int i = 0; i < n; i++) {
-                int back = 0;
-                for (int j = 0; j < n; j++) {
-                    char cur = map[i][j];
-                    if ((bit & (1 << j)) != 0) cur = cur == 'H' ? 'T' : 'H';
-                    if (cur == 'T') back++;
-                }
-                cnt += Math.min(back, n - back);
+                int t = Integer.bitCount(r[i] ^ bit);
+                cnt += Math.min(t, n - t);
             }
             min = Math.min(min, cnt);
         }
