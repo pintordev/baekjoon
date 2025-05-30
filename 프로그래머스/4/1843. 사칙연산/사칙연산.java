@@ -1,0 +1,45 @@
+class Solution {
+    public static int[][][] memo;
+    public static boolean[] op;
+
+    public int solution(String arr[]) {
+        int n = (arr.length >> 1) + 1;
+        int[] num = new int[n];
+        op = new boolean[n - 1];
+        int ndx = 0, odx = 0;
+        for (String term : arr) {
+            if (term.equals("+")) op[odx++] = true;
+            else if (term.equals("-")) op[odx++] = false;
+            else num[ndx++] = Integer.parseInt(term);
+        }
+
+        memo = new int[n][n][2];
+        for (int i = 0; i < n; i++) {
+            memo[i][i][0] = num[i];
+            memo[i][i][1] = num[i];
+        }
+
+        for (int d = 1; d < n; d++) {
+            for (int s = 0; s + d < n; s++) {
+                cal(s, s + d);
+            }
+        }
+        return memo[0][n - 1][1];
+    }
+
+    public void cal(int s, int e) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i = s; i < e; i++) {
+            if (op[i]) {
+                min = Math.min(min, memo[s][i][0] + memo[i + 1][e][0]);
+                max = Math.max(max, memo[s][i][1] + memo[i + 1][e][1]);
+            } else {
+                min = Math.min(min, memo[s][i][0] - memo[i + 1][e][1]);
+                max = Math.max(max, memo[s][i][1] - memo[i + 1][e][0]);
+            }
+        }
+        memo[s][e][0] = min;
+        memo[s][e][1] = max;
+    }
+}
